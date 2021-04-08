@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
 
+contract Context {
+    constructor() internal {}
+
+    function _msgSender() internal view returns (address payable) {
+      return msg.sender;
+    }
+}
+
 contract Coin {
     // The keyword "public" makes variables
     // accessible from other contracts
