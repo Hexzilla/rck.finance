@@ -2,10 +2,15 @@
 pragma solidity ^0.8.4;
 
 contract Context {
+    // Empty internal constructor
     constructor() internal {}
 
     function _msgSender() internal view returns (address payable) {
       return msg.sender;
+    }
+
+    function _msgData() internal view returns (bytes memory) {
+        return msg.data;
     }
 }
 
