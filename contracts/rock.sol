@@ -65,6 +65,25 @@ contract Ownable is Context {
         _owner = msgSender;
         emit OwnershipTransferred(address(0), msgSender);
     }
+
+    /**
+     * @dev Returns the address of the owner.
+     */
+    function owner() public view returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Transfers ownership of the contract.
+     */
+    function transferOwnership(address newOwner) public onlyOwner {
+        _transferOwnership(newOwner);
+    }
+
+    function _transferOwnership(address newOwner) internal {
+        emit OwnershipTransferred(_owner, newOwner);
+        _owner = newOwner;
+    }
 }
 
 interface IBEP20 {
