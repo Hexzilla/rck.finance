@@ -100,4 +100,6 @@ interface IBEP20 {
     function getOwner() external view returns (address);
 
     function balanceOf(address account) external view returns (uint256);
+
+    event Transfer(address indexed _from, address indexed _to, uint256 value);
 }
