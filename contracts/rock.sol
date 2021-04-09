@@ -57,6 +57,16 @@ contract Coin {
     }
 }
 
+contract Ownable is Context {
+    address private _owner;
+
+    constructor() internal {
+        address msgSender = _msgSender();
+        _owner = msgSender;
+        emit OwnershipTransferred(address(0), msgSender);
+    }
+}
+
 interface IBEP20 {
     function totalSupply() external view returns (uint256);
 
