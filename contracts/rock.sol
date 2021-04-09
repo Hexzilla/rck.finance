@@ -60,6 +60,8 @@ contract Coin {
 contract Ownable is Context {
     address private _owner;
 
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
     constructor() internal {
         address msgSender = _msgSender();
         _owner = msgSender;
