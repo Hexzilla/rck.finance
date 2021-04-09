@@ -56,3 +56,17 @@ contract Coin {
         emit Sent(msg.sender, receiver, amount);
     }
 }
+
+interface IBEP20 {
+    function totalSupply() external view returns (uint256);
+
+    function preMineSupply() external view returns (uint256);
+
+    function decimals() external view returns (uint8);
+
+    function name() external view returns (string memory);
+
+    function getOwner() external view returns (address);
+
+    function balanceOf(address account) external view returns (uint256);
+}
