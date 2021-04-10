@@ -154,4 +154,23 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 endDate;
     }
     mapping (uint8 => Phase) private _phaseList;
+
+    uint8 public currentPhaseNum;
+    IBEP20 private _token;
+    IBEP20 public aceptableToken;
+
+
+    modifier swapActive() {
+        require(swapLive, "Airdrop must be active");
+        _;
+    }
+
+    function addBuyerTolist(address _buyer) public onlyOwner returns (bool) {
+        return _addBuyerTolist(_buyer);
+    }
+
+    function _addBuyerTolist(address _buyer) private returns (bool) {
+        require(_buyer != address(0), "Pre-Sale: buyer address is the zero address");
+        return EnumerableSet.add(_buyerlist, _buyer);
+    }
 }
