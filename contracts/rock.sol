@@ -127,4 +127,16 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     using SafeBEP20 for IBEP20;
     bool public claimReady;
     uint256 private constant _jazzLimit = 100 * 1e18;
+
+    struct PriceRate {
+        uint256 nominator;
+        uint256 denominator;
+    }
+
+    struct ClaimStatus {
+        bool jazzHolder;
+        bool claimed;
+        uint256 jazzAmount;
+        uint256 buyAmount;
+    }
 }
