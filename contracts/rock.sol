@@ -173,4 +173,36 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         require(_buyer != address(0), "Pre-Sale: buyer address is the zero address");
         return EnumerableSet.add(_buyerlist, _buyer);
     }
+
+    function getPhase(uint8 _phaseNum) public view returns (
+        bool  isRunning,
+        uint256 priceN,
+        uint256 priceD,
+        uint256 endDate) {
+        require (_phaseNum >0 && _phaseNum < 9, "Pre-Sale: Phase number must be small than 9.");
+        isRunning = _phaseList[_phaseNum].isRunning;
+        priceN = _phaseList[_phaseNum].price.nominator;
+        priceD = _phaseList[_phaseNum].price.denominator;
+        endDate = _phaseList[_phaseNum].endDate;
+    }
+
+    function forwardPhase () public onlyOwner {
+        _forwardPhase();
+    }
+
+    function _forwardPhase() private icoActive returns(bool)  {
+        require (currentPhaseNum <= maxPhase, "ICO is over");
+
+        for (uint8 i = 1; i <= maxPhase; i++) {
+            if(now < _phaseList[i].endDate){
+                _phaseList[currentPhaseNum].isRunning = false;
+                currentPhaseNum = i;
+                _phaseList[currentPhaseNum].isRunning = true;
+                return true;
+            }
+        }
+
+        _stopICO();
+        return false;
+    }
 }
