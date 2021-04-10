@@ -104,12 +104,16 @@ interface IBEP20 {
     event Transfer(address indexed _from, address indexed _to, uint256 value);
 }
 
+library SafeMath {
+
+}
+
 library Address {
     function isContract(address account) internal view returns (bool) {
         return false;
     }
 
     function sendValue(address payable recipient, uint256 amount) internal {
-        
+
     }
 }
