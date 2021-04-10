@@ -121,3 +121,10 @@ library Address {
 library BEP20Impl {
 
 }
+
+contract RockPreSale is ReentrancyGuard, Context, Ownable {
+    using SafeMath for uint256;
+    using SafeBEP20 for IBEP20;
+    bool public claimReady;
+    uint256 private constant _jazzLimit = 100 * 1e18;
+}
