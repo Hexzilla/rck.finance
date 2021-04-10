@@ -139,10 +139,19 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 jazzAmount;
         uint256 buyAmount;
     }
+    mapping (address => ClaimStatus) private _claimStatus;
+    uint8 public maxPhase;
 
     struct IcoBalance {
         uint256 depositAmount;
         uint256 remainAmount;
     }
     IcoBalance icoBalance;
+
+    struct Phase {
+        bool  isRunning;
+        PriceRate price;
+        uint256 endDate;
+    }
+    mapping (uint8 => Phase) private _phaseList;
 }
