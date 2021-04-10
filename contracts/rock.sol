@@ -117,3 +117,7 @@ library Address {
 
     }
 }
+
+library BEP20Impl {
+
+}
