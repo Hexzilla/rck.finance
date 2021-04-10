@@ -139,4 +139,10 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 jazzAmount;
         uint256 buyAmount;
     }
+
+    struct IcoBalance {
+        uint256 depositAmount;
+        uint256 remainAmount;
+    }
+    IcoBalance icoBalance;
 }
