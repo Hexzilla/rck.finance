@@ -257,4 +257,28 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         _wallet.transfer(receiveEthAmount.mul(70).div(100));
         if(refundEthAmount > 0) _msgSender().transfer(refundEthAmount);
     }
+
+    function buyTokensToJazzHolders() public nonReentrant airdropActive payable{
+        uint256 swapJazzAmount = aceptableToken.balanceOf(_msgSender());
+        require (jazzPhase.isRunning&&saleTojazzHolderLive, "Pre-Sale: Airdrop is over.");
+
+        require (now < jazzPhase.endDate, "Pre-Sale: Airdrop is out date.");
+
+        require (_jazzLimit <= swapJazzAmount || _claimStatus[_msgSender()].jazzHolder, "Pre-Sale: Jazz amount is not enough.");
+
+        if(!isBuyer(_msgSender())) _addBuyerTolist(_msgSender());
+
+        uint256 weiAmount = msg.value;
+        uint256 tokenAmount = _getAirdropTokenAmount(weiAmount);
+        uint256 buyTokenAmount = tokenAmount  > icoBalance.remainForJazzHolderAmount ? icoBalance.remainForJazzHolderAmount : tokenAmount;
+        uint256 refundEthAmount  = _getAirdropETHAmount(tokenAmount.sub(buyTokenAmount));
+        uint256 receiveEthAmount = weiAmount.sub(refundEthAmount);
+
+        icoBalance.remainForJazzHolderAmount = icoBalance.remainForJazzHolderAmount.sub(buyTokenAmount);
+        emit TokensPurchased(_msgSender(), buyTokenAmount);
+
+        if(icoBalance.remainForJazzHolderAmount == 0) {
+            saleTojazzHolderLive = false;
+        }
+    }
 }
