@@ -303,4 +303,21 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
             swapLive = false;
         }
     }
+
+    function SetICOAmount(uint256 amount_, uint256 jazzSaleAmount_,uint256 jazzSwapAmount_) public onlyOwner returns(bool res)  {
+        icoBalance.depositAmount = amount_;
+        icoBalance.depositForJazzHolderAmount = jazzSaleAmount_;
+        icoBalance.airdropAmount = jazzSwapAmount_;
+        icoBalance.remainAmount = amount_;
+        icoBalance.remainForJazzHolderAmount = jazzSaleAmount_;
+        icoBalance.remainAirdropAmount = jazzSwapAmount_;
+        return true;
+    }
+
+    function SetAcceptableToken(IBEP20 addr) public onlyOwner returns(bool res)  {
+        require (address(addr)!=address(0), 'Token is zero address.');
+        aceptableToken = addr;
+        //require(icoAmount() > 0 && icoAmount() <= _token.balanceOf(address(this)), 'Deposited tokens must be great than presale amount');
+        return true;
+    }
 }
