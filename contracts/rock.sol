@@ -320,4 +320,24 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         //require(icoAmount() > 0 && icoAmount() <= _token.balanceOf(address(this)), 'Deposited tokens must be great than presale amount');
         return true;
     }
+
+    function getDeliverAmount (address buyer) public view returns(uint256)  {
+        uint256 amount = _claimStatus[buyer].buyAmount;
+        return amount;
+    }
+
+    function SetClaimReady(bool val) public onlyOwner returns(bool res)  {
+        claimReady = val;
+        return true;
+    }
+
+    function Claim() public claimActive {
+        require (address(_token)!=address(0), 'Token is not set.');
+        require (!_claimStatus[_msgSender()].claimed, 'You are already claimed.');
+        address buyer = _msgSender();
+        uint256 amount = getDeliverAmount( _msgSender());
+        _deliverTokens(buyer, amount);
+        _claimStatus[buyer].claimed =  true;
+        emit TokenDevlivered(amount);
+    }
 }
