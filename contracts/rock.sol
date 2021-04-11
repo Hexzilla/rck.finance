@@ -205,4 +205,33 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         _stopICO();
         return false;
     }
+
+    function startICO(uint endDate) public onlyOwner icoNotActive() {
+        require(endDate > now, 'duration should be > 0');
+
+        endICO = endDate;
+        currentPhaseNum = 1;
+        _phaseList[1].isRunning = true;
+        jazzPhase.isRunning = true;
+        icoLive = true;
+        saleTojazzHolderLive = true;
+        swapLive = true;
+    }
+
+    function stopICO() public onlyOwner icoActive(){
+        _stopICO();
+        jazzPhase.isRunning = false;
+        swapLive = false;
+        saleTojazzHolderLive = false;
+    }
+
+    function _stopICO() private icoActive(){
+        currentPhaseNum = maxPhase + 1;
+        endICO = 0;
+        for (uint8 i = 1; i <= maxPhase; i++) {
+            _phaseList[i].isRunning = false;
+        }
+
+        icoLive = false;
+    }
 }
