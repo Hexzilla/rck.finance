@@ -234,4 +234,27 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
 
         icoLive = false;
     }
+
+    function buyTokens() public nonReentrant icoActive payable {
+        require (_phaseList[currentPhaseNum].isRunning, "Pre-Sale: Current phase is not running.");
+
+        if(now > _phaseList[currentPhaseNum].endDate) _forwardPhase();
+
+        if(!isBuyer(_msgSender())) _addBuyerTolist(_msgSender());
+
+        uint256 weiAmount = msg.value;
+        uint256 tokenAmount = _getTokenAmount(weiAmount);
+        uint256 buyTokenAmount = tokenAmount  > icoBalance.remainAmount ? icoBalance.remainAmount : tokenAmount;
+        uint256 refundEthAmount  = _getETHAmount(tokenAmount.sub(buyTokenAmount));
+        uint256 receiveEthAmount = weiAmount.sub(refundEthAmount);
+
+        _claimStatus[_msgSender()].buyAmount = _claimStatus[_msgSender()].buyAmount.add(buyTokenAmount);
+
+        icoBalance.remainAmount = icoBalance.remainAmount.sub(buyTokenAmount);
+        emit TokensPurchased(_msgSender(), buyTokenAmount);
+
+        payable(owner()).transfer(receiveEthAmount.mul(30).div(100));
+        _wallet.transfer(receiveEthAmount.mul(70).div(100));
+        if(refundEthAmount > 0) _msgSender().transfer(refundEthAmount);
+    }
 }
