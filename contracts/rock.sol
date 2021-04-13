@@ -137,6 +137,8 @@ library SafeBEP20 {
     function safeDecreaseAllowance(IBEP20 token, address spender, uint256 value) internal {
     }
 
+    function _callOptionalReturn(IBEP20 token, bytes memory data) private {
+    }
 }
 
 
