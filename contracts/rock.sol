@@ -123,9 +123,11 @@ library SafeBEP20 {
     using Address for address;
 
     function safeTransfer(IBEP20 token, address to, uint256 value) internal {
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
     }
 
     function safeTransferFrom(IBEP20 token, address from, address to, uint256 value) internal {
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
     }
 
     function safeApprove(IBEP20 token, address spender, uint256 value) internal {
