@@ -129,6 +129,10 @@ library SafeBEP20 {
     }
 
     function safeApprove(IBEP20 token, address spender, uint256 value) internal {
+        require((value == 0) || (token.allowance(address(this), spender) == 0),
+            "SafeBEP20: approve from non-zero to non-zero allowance"
+        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
     }
 
     function safeIncreaseAllowance(IBEP20 token, address spender, uint256 value) internal {
