@@ -130,6 +130,9 @@ library SafeBEP20 {
         _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
     }
 
+    /**
+     * @dev Deprecated. This function has issues similar to the ones found in
+     */
     function safeApprove(IBEP20 token, address spender, uint256 value) internal {
         require((value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeBEP20: approve from non-zero to non-zero allowance"
@@ -145,6 +148,10 @@ library SafeBEP20 {
         _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
+    /**
+     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement
+     * on the return value: the return value is optional (but if data is returned, it must not be false).
+     */
     function _callOptionalReturn(IBEP20 token, bytes memory data) private {
         bytes memory returndata = address(token).functionCall(data, "SafeBEP20: low-level call failed");
         if (returndata.length > 0) { // Return data is optional
