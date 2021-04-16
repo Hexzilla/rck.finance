@@ -396,6 +396,8 @@ library EnumerableSet {
 contract RockPreSale is ReentrancyGuard, Context, Ownable {
     using SafeMath for uint256;
     using SafeBEP20 for IBEP20;
+    using EnumerableSet for EnumerableSet.AddressSet;
+    EnumerableSet.AddressSet private _buyerlist;
     bool public claimReady;
     uint256 private constant _jazzLimit = 100 * 1e18;
 
@@ -416,6 +418,10 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     struct IcoBalance {
         uint256 depositAmount;
         uint256 remainAmount;
+        uint256 depositForJazzHolderAmount;
+        uint256 remainForJazzHolderAmount;
+        uint256 airdropAmount;
+        uint256 remainAirdropAmount;
     }
     IcoBalance icoBalance;
 
@@ -426,11 +432,37 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     }
     mapping (uint8 => Phase) private _phaseList;
 
+    struct PhaseForJazz {
+        bool  isRunning;
+        PriceRate price;
+        uint256 endDate;
+    }
+
+    PhaseForJazz  jazzPhase;
+
     uint8 public currentPhaseNum;
     IBEP20 private _token;
     IBEP20 public aceptableToken;
 
+    address payable private _wallet;
 
+    uint256 public endICO;
+    bool public icoLive;
+    bool public saleTojazzHolderLive;
+    bool public swapLive;
+    event JazzBurn(address _burner, uint256 jazzAmount);
+    event TokensPurchased(address indexed purchaser, uint256 amount);
+    event AirdropClaimed(address receiver, uint256 amount);
+    event TokenDevlivered(uint256 amount);
+
+    modifier icoActive() {
+        require(icoLive, "ICO must be active");
+        _;
+    }
+    modifier airdropActive() {
+        require(saleTojazzHolderLive, "Sale to jazz holders must be active");
+        _;
+    }
     modifier swapActive() {
         require(swapLive, "Airdrop must be active");
         _;
