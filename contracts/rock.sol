@@ -501,6 +501,21 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         return EnumerableSet.add(_buyerlist, _buyer);
     }
 
+    function getBuyerlistLength() public view returns (uint256) {
+        return EnumerableSet.length(_buyerlist);
+    }
+
+    function isBuyer(address _buyer) public view returns (bool) {
+        return EnumerableSet.contains(_buyerlist, _buyer);
+    }
+
+    function getBuyer(uint256 _index) public view returns (address){
+        require(_index <= getBuyerlistLength() - 1, "SwapMining: index out of bounds");
+        return EnumerableSet.at(_buyerlist, _index);
+    }
+
+
+
     function getPhase(uint8 _phaseNum) public view returns (
         bool  isRunning,
         uint256 priceN,
