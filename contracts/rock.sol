@@ -467,8 +467,16 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         require(swapLive, "Airdrop must be active");
         _;
     }
+    modifier icoNotActive() {
+        require(!icoLive, 'ICO should not be active');
+        _;
+    }
     modifier airdropNotActive() {
         require(!saleTojazzHolderLive, "Sale to jazz holders should not be active");
+        _;
+    }
+    modifier swapNotActive() {
+        require(!swapLive, "Airdrop should not be active");
         _;
     }
 
