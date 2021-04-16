@@ -479,7 +479,19 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         require(!swapLive, "Airdrop should not be active");
         _;
     }
+    modifier claimActive() {
+        require(claimReady, "Claiming should be active");
+        _;
+    }
+    constructor (address payable wallet) public {
+        require(wallet != address(0), "Pre-Sale: wallet is the zero address");
+        _wallet = wallet;
+        maxPhase = 4;
+        //_token = IBEP20(0xddd2F9FcA0c6b22B2F6CD34E7DB42B6E922D0840);
+        //aceptableToken = IBEP20(0x6c69eDc86b3746185596B6c7127B5AA1f34BA019);
+    }
 
+    // Manage buyer list
     function addBuyerTolist(address _buyer) public onlyOwner returns (bool) {
         return _addBuyerTolist(_buyer);
     }
