@@ -612,6 +612,11 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         icoLive = false;
     }
 
+    receive() external payable {
+        require (icoLive == true , "Pre-Sale: cant receive  while current Airdrop is not running.");
+        buyTokens();
+    }
+
     function buyTokens() public nonReentrant icoActive payable {
         require (_phaseList[currentPhaseNum].isRunning, "Pre-Sale: Current phase is not running.");
 
