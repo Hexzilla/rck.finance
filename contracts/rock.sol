@@ -514,7 +514,18 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         return EnumerableSet.at(_buyerlist, _index);
     }
 
+    // Manage phase
+    function updatePhase(uint8 phaseNum,uint256 priceN, uint256 priceD, uint256 endDate) public onlyOwner returns (bool) {
+        require (priceN>0&&priceD>0, "Pre-Sale:Price should be not zero.");
+        _phaseList[phaseNum].price = PriceRate(priceN, priceD);
+        _phaseList[phaseNum].endDate = endDate;
+    }
 
+    function updatePhaseForJazzHolders(uint256 priceN, uint256 priceD, uint256 endDate) public onlyOwner returns (bool) {
+        require (priceN>0&&priceD>0, "Pre-Sale:Price should be not zero.");
+        jazzPhase.price= PriceRate(priceN, priceD);
+        jazzPhase.endDate= endDate;
+    }
 
     function getPhase(uint8 _phaseNum) public view returns (
         bool  isRunning,
