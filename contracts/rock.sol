@@ -575,7 +575,14 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 amt = icoBalance.remainAmount;
         return amt;
     }
-
+    function airdropRemainAmount()  public view returns(uint256) {
+        uint256 amt = icoBalance.remainAirdropAmount;
+        return amt;
+    }
+    function icoRemainAmountForJazzHolder()  public view returns(uint256) {
+        uint256 amt = icoBalance.remainForJazzHolderAmount;
+        return amt;
+    }
     function startICO(uint endDate) public onlyOwner icoNotActive() {
         require(endDate > now, 'duration should be > 0');
 
