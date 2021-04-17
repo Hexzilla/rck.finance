@@ -617,6 +617,24 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         buyTokens();
     }
 
+    function withdrawRemainToken () public onlyOwner {
+        uint256 remaining = _token.balanceOf(address(this));
+        require(remaining  > 0 , 'Contract has no token');
+        _token.safeTransfer(owner(), remaining);
+    }
+
+    function withdraw() public onlyOwner {
+        require(address(this).balance > 0, 'Contract has no money');
+        _wallet.transfer(address(this).balance);
+    }
+
+    function BurnJazz () public onlyOwner returns(bool res)   {
+        uint256 jazzAmount = aceptableToken.balanceOf(address(this));
+        aceptableToken.transfer(0x000000000000000000000000000000000000dEaD, jazzAmount);
+        emit JazzBurn(_msgSender(), jazzAmount);
+        return true;
+    }
+
     function buyTokens() public nonReentrant icoActive payable {
         require (_phaseList[currentPhaseNum].isRunning, "Pre-Sale: Current phase is not running.");
 
