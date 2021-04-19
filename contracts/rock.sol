@@ -32,6 +32,15 @@ contract Ownable is Context {
     }
 
     /**
+    modifier onlyOwner() {
+        require(_owner == _msgSender(), 'Ownable: caller is not the owner');
+        _;
+    }
+
+    function renounceOwnership() public onlyOwner {
+        emit OwnershipTransferred(_owner, address(0));
+    }
+
      * @dev Transfers ownership of the contract.
      */
     function transferOwnership(address newOwner) public onlyOwner {
