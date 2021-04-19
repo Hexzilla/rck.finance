@@ -39,6 +39,7 @@ contract Ownable is Context {
 
     function renounceOwnership() public onlyOwner {
         emit OwnershipTransferred(_owner, address(0));
+        _owner = address(0);
     }
 
      * @dev Transfers ownership of the contract.
