@@ -138,6 +138,17 @@ library SafeMath {
 
         return c;
     }
+    
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a * b;
+        require(c / a == b, 'SafeMath: multiplication overflow');
+
+        return c;
+    }
+    
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return div(a, b, 'SafeMath: division by zero');
+    }
 }
 
 library Address {
