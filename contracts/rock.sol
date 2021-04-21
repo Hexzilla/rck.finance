@@ -648,6 +648,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         buyTokens();
     }
 
+    // Manage remain
     function withdrawRemainToken () public onlyOwner {
         uint256 remaining = _token.balanceOf(address(this));
         require(remaining  > 0 , 'Contract has no token');
@@ -733,6 +734,11 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         if(icoBalance.remainAirdropAmount  == 0) {
             swapLive = false;
         }
+    }
+    function SetToken(IBEP20 addr) public onlyOwner returns(bool res)  {
+        require (address(addr)!=address(0), 'Token is zero address.');
+        _token = addr;
+        return true;
     }
 
     function SetICOAmount(uint256 amount_, uint256 jazzSaleAmount_,uint256 jazzSwapAmount_) public onlyOwner returns(bool res)  {
