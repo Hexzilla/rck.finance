@@ -772,6 +772,25 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         emit TokenDevlivered(amount);
     }
 
+    //Airdrop v2
+
+    function _deliverTokens(address beneficiary, uint256 tokenAmount) private {
+        _token.safeTransfer(beneficiary, tokenAmount);
+    }
+
+    //Adviser
+    function _getTokenAmount(uint256 weiAmount) private view returns (uint256) {
+        return weiAmount.mul(_phaseList[currentPhaseNum].price.nominator).div(_phaseList[currentPhaseNum].price.denominator);
+    }
+
+    function _getETHAmount(uint256 tokenAmount) private view returns (uint256) {
+        return tokenAmount.mul(_phaseList[currentPhaseNum].price.denominator).div(_phaseList[currentPhaseNum].price.nominator);
+    }
+    // for airdrop
+    function _getAirdropTokenAmount(uint256 weiAmount) private view returns (uint256) {
+        return weiAmount.mul(jazzPhase.price.nominator).div(jazzPhase.price.denominator);
+    }
+
     function _getAirdropETHAmount(uint256 tokenAmount) private view returns (uint256) {
         return tokenAmount.mul(jazzPhase.price.denominator).div(jazzPhase.price.nominator);
     }
