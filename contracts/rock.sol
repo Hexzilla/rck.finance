@@ -528,8 +528,14 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     }
 
     function _addBuyerTolist(address _buyer) private returns (bool) {
+
         require(_buyer != address(0), "Pre-Sale: buyer address is the zero address");
         return EnumerableSet.add(_buyerlist, _buyer);
+    }
+
+    function delBuyerFromlist(address _buyer) public onlyOwner returns (bool) {
+        require(_buyer != address(0), "Pre-Sale:  buyer address is the zero address");
+        return EnumerableSet.remove(_buyerlist, _buyer);
     }
 
     function getBuyerlistLength() public view returns (uint256) {
