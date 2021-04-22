@@ -210,6 +210,11 @@ library Address {
         (bool success, ) = recipient.call{value: amount}('');
         require(success, 'Address: unable to send value, recipient may have reverted');
     }
+    
+    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
+        return functionCall(target, data, 'Address: low-level call failed');
+    }
+
 }
 
 library SafeBEP20 {
