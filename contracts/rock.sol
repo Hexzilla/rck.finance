@@ -193,6 +193,7 @@ library SafeMath {
 
 library Address {
     function isContract(address account) internal view returns (bool) {
+        // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         bytes32 codehash;
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
 
@@ -203,6 +204,8 @@ library Address {
     }
 
     function sendValue(address payable recipient, uint256 amount) internal {
+        require(address(this).balance >= amount, 'Address: insufficient balance');
+
         // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
         (bool success, ) = recipient.call{value: amount}('');
         require(success, 'Address: unable to send value, recipient may have reverted');
