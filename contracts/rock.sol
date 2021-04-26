@@ -993,6 +993,8 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
             swapLive = false;
         }
     }
+
+    //token Deliver
     function SetToken(IBEP20 addr) public onlyOwner returns(bool res)  {
         require (address(addr)!=address(0), 'Token is zero address.');
         _token = addr;
@@ -1011,8 +1013,6 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
 
     function SetAcceptableToken(IBEP20 addr) public onlyOwner returns(bool res)  {
         require (address(addr)!=address(0), 'Token is zero address.');
-        aceptableToken = addr;
-        //require(icoAmount() > 0 && icoAmount() <= _token.balanceOf(address(this)), 'Deposited tokens must be great than presale amount');
         return true;
     }
 
@@ -1032,7 +1032,6 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         address buyer = _msgSender();
         uint256 amount = getDeliverAmount( _msgSender());
         _deliverTokens(buyer, amount);
-        _claimStatus[buyer].claimed =  true;
         emit TokenDevlivered(amount);
     }
 
