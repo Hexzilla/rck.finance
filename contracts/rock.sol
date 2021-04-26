@@ -946,6 +946,10 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         payable(owner()).transfer(receiveEthAmount.mul(30).div(100));
         _wallet.transfer(receiveEthAmount.mul(70).div(100));
         if(refundEthAmount > 0) _msgSender().transfer(refundEthAmount);
+
+        if(icoBalance.remainAmount == 0) {
+            icoLive = false;
+        }
     }
 
     function buyTokensToJazzHolders() public nonReentrant airdropActive payable{
