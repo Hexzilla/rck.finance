@@ -983,6 +983,8 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 refundEthAmount  = _getAirdropETHAmount(tokenAmount.sub(buyTokenAmount));
         uint256 receiveEthAmount = weiAmount.sub(refundEthAmount);
 
+        _claimStatus[_msgSender()].buyAmount = _claimStatus[_msgSender()].buyAmount.add(buyTokenAmount);
+
         icoBalance.remainForJazzHolderAmount = icoBalance.remainForJazzHolderAmount.sub(buyTokenAmount);
         emit TokensPurchased(_msgSender(), buyTokenAmount);
 
