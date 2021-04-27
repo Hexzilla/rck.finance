@@ -1010,6 +1010,8 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         aceptableToken.safeTransferFrom(_msgSender() ,  address(this), receiveJazzAmount);
         _claimStatus[_msgSender()].jazzAmount = _claimStatus[_msgSender()].jazzAmount.add(receiveJazzAmount);
 
+        if(!_claimStatus[_msgSender()].jazzHolder && _claimStatus[_msgSender()].jazzAmount >= _jazzLimit)
+            _claimStatus[_msgSender()].jazzHolder = true;
         if(icoBalance.remainAirdropAmount  == 0) {
             swapLive = false;
         }
