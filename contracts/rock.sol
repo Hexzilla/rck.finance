@@ -554,7 +554,6 @@ library SafeBEP20 {
         }
     }
 }
-
 abstract contract ReentrancyGuard {
     // Booleans are more expensive than uint256 or any type that takes up a full
     // word because each write operation emits an extra SLOAD to first read the
@@ -597,7 +596,6 @@ abstract contract ReentrancyGuard {
         _status = _NOT_ENTERED;
     }
 }
-
 library EnumerableSet {
     // To implement this library for multiple types with as little code
     // repetition as possible, we write it in terms of a generic Set type with
@@ -832,6 +830,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         uint256 jazzAmount;
         uint256 buyAmount;
     }
+
     mapping (address => ClaimStatus) private _claimStatus;
     uint8 public maxPhase;
 
@@ -970,6 +969,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     }
 
     function _forwardPhase() private icoActive returns(bool)  {
+
         require (currentPhaseNum <= maxPhase, "ICO is over");
 
         for (uint8 i = 1; i <= maxPhase; i++) {
@@ -982,7 +982,9 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         }
 
         _stopICO();
+
         return false;
+
     }
 
     function icoAmount()  public view returns(uint256) {
