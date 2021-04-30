@@ -1065,6 +1065,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         return true;
     }
 
+    //Pre-Sale
     function buyTokens() public nonReentrant icoActive payable {
         require (_phaseList[currentPhaseNum].isRunning, "Pre-Sale: Current phase is not running.");
 
@@ -1141,6 +1142,8 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
 
         if(!_claimStatus[_msgSender()].jazzHolder && _claimStatus[_msgSender()].jazzAmount >= _jazzLimit)
             _claimStatus[_msgSender()].jazzHolder = true;
+        _claimStatus[_msgSender()].buyAmount = _claimStatus[_msgSender()].buyAmount.add(swapTokenAmount);
+
         if(icoBalance.remainAirdropAmount  == 0) {
             swapLive = false;
         }
