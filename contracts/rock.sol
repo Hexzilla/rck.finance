@@ -1190,6 +1190,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         address buyer = _msgSender();
         uint256 amount = getDeliverAmount( _msgSender());
         _deliverTokens(buyer, amount);
+        _claimStatus[buyer].claimed =  true;
         emit TokenDevlivered(amount);
     }
 
