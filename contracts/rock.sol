@@ -78,7 +78,6 @@ contract Ownable is Context {
         _owner = newOwner;
     }
 }
-
 interface IBEP20 {
     /**
      * @dev Returns the amount of tokens in existence.
@@ -175,7 +174,6 @@ interface IBEP20 {
      */
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
-
 library SafeMath {
     /**
      * @dev Returns the addition of two unsigned integers, reverting on
@@ -866,6 +864,7 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
     PhaseForJazz  jazzPhase;
 
     uint8 public currentPhaseNum;
+
     IBEP20 private _token;
     IBEP20 public aceptableToken;
 
@@ -1249,4 +1248,5 @@ contract RockPreSale is ReentrancyGuard, Context, Ownable {
         priceD = jazzPhase.price.denominator;
         endDate = jazzPhase.endDate;
     }
+
 }
